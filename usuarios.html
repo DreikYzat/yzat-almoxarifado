@@ -34,6 +34,26 @@
     font-size:16px;
 }
 
+.modal-box input,
+.modal-box select{
+    width:100%;
+    display:block;
+    padding:14px;
+    margin-bottom:14px;
+    border:none;
+    border-radius:10px;
+    background:#2b3748;
+    color:white;
+    font-size:16px;
+}
+
+.modal-box label{
+    display:block;
+    margin-bottom:6px;
+    color:#cbd5e1;
+    font-weight:bold;
+}
+
 .card button,
 .usuario-card button,
 .modal-box button{
@@ -122,16 +142,19 @@
 <div id="modalEditar" class="modal">
     <div class="modal-box">
         <h2>✏️ Editar Usuário</h2>
-
         <input id="editId" type="hidden">
-        <input id="editNome" placeholder="Nome">
-        <input id="editUsuario" placeholder="Usuário">
+        <label>Nome</label>
+<input type="text" id="editNome">
 
-        <select id="editCargo">
-            <option value="almoxarife">Almoxarife</option>
-            <option value="supervisor">Supervisor</option>
-            <option value="admin">Administrador</option>
-        </select>
+<label>Usuário</label>
+<input type="text" id="editUsuario">
+
+<label>Cargo</label>
+<select id="editCargo">
+    <option value="admin">Administrador</option>
+    <option value="supervisor">Supervisor</option>
+    <option value="almoxarife">Almoxarife</option>
+</select>
 
         <button onclick="salvarEdicaoUsuario()">Salvar Alterações</button>
         <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>

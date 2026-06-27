@@ -73,7 +73,8 @@ async function carregarUsuarios() {
                     Status: ${user.ativo ? "🟢 Ativo" : "🔴 Inativo"}
                     <br><br>
 
-                    <button onclick="abrirModalEditar(${user.id}, '${user.nome}', '${user.usuario}', '${user.cargo}')">
+                <button onclick='abrirModalEditar($
+                {JSON.stringify(user)})'>
                         ✏️ Editar
                     </button>
 
@@ -191,6 +192,49 @@ async function confirmarExcluirUsuario() {
 
     } catch {
         mostrarMensagem("Erro ao conectar com o servidor.", "erro");
+    }
+}
+
+function abrirModalEditar(user) {
+    document.getElementById("modalEditar").style.display = "flex";
+
+    document.getElementById("editId").value = user.id;
+    document.getElementById("editNome").value = user.nome;
+    document.getElementById("editUsuario").value = user.usuario;
+    document.getElementById("editCargo").value = user.cargo;
+}
+
+function fecharModalEditar() {
+    document.getElementById("modalEditar").style.display = "none";
+}
+
+async function salvarEdicaoUsuario() {
+
+    const id = document.getElementById("editId").value;
+    const nome = document.getElementById("editNome").value.trim();
+    const usuario = document.getElementById("editUsuario").value.trim();
+    const cargo = document.getElementById("editCargo").value;
+
+    const resposta = await fetch(`${API}/usuarios/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nome,
+            usuario,
+            cargo
+        })
+    });
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+        mostrarMensagem("Usuário atualizado com sucesso!");
+        fecharModalEditar();
+        carregarUsuarios();
+    } else {
+        mostrarMensagem(dados.mensagem || "Erro ao atualizar usuário.", "erro");
     }
 }
 
