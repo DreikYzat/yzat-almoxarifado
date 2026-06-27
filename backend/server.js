@@ -25,15 +25,18 @@ async function registrarHistorico(tipo, descricao) {
 app.get("/", (req, res) => {
     res.json({
         mensagem: "API YZAT Almoxarifado com PostgreSQL funcionando 🚀",
-        versao: "3.0"
+        versao: "3.1"
     });
 });
+
+/* LOGIN */
+
 app.post("/login", async (req, res) => {
     const { usuario, senha } = req.body;
 
     if (!usuario || !senha) {
         return res.status(400).json({
-            mensagem: "Usuário e senha são obrigatórios"
+            mensagem: "Usuário e senha são obrigatórios."
         });
     }
 
@@ -44,17 +47,16 @@ app.post("/login", async (req, res) => {
 
     if (resultado.rows.length === 0) {
         return res.status(401).json({
-            mensagem: "Usuário ou senha incorretos"
+            mensagem: "Usuário ou senha incorretos."
         });
     }
 
     const user = resultado.rows[0];
-
     const senhaCorreta = await bcrypt.compare(senha, user.senha);
 
     if (!senhaCorreta) {
         return res.status(401).json({
-            mensagem: "Usuário ou senha incorretos"
+            mensagem: "Usuário ou senha incorretos."
         });
     }
 
@@ -69,6 +71,8 @@ app.post("/login", async (req, res) => {
     });
 });
 
+/* USUÁRIOS */
+
 app.get("/usuarios", async (req, res) => {
     const resultado = await pool.query(`
         SELECT id, nome, usuario, cargo, ativo, criado_em
@@ -79,22 +83,40 @@ app.get("/usuarios", async (req, res) => {
     res.json(resultado.rows);
 });
 
-app.delete("/usuarios/:id", async (req, res) => {
-    const id = Number(req.params.id);
+app.post("/usuarios", async (req, res) => {
+    const { nome, usuario, senha, cargo } = req.body;
 
-    const resultado = await pool.query(
-        "DELETE FROM usuarios WHERE id = $1 RETURNING id, nome",
-        [id]
-    );
-
-    if (resultado.rows.length === 0) {
-        return res.status(404).json({
-            mensagem: "Usuário não encontrado."
+    if (!nome || !usuario || !senha || !cargo) {
+        return res.status(400).json({
+            mensagem: "Preencha todos os campos."
         });
     }
 
-    res.json({
-        mensagem: "Usuário removido com sucesso."
+    const existe = await pool.query(
+        "SELECT id FROM usuarios WHERE usuario = $1",
+        [usuario]
+    );
+
+    if (existe.rows.length > 0) {
+        return res.status(400).json({
+            mensagem: "Usuário já existe."
+        });
+    }
+
+    const senhaHash = await bcrypt.hash(senha, 10);
+
+    const resultado = await pool.query(
+        `
+        INSERT INTO usuarios (nome, usuario, senha, cargo)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, nome, usuario, cargo, ativo
+        `,
+        [nome, usuario, senhaHash, cargo]
+    );
+
+    res.status(201).json({
+        mensagem: "Usuário cadastrado com sucesso.",
+        usuario: resultado.rows[0]
     });
 });
 
@@ -105,6 +127,17 @@ app.put("/usuarios/:id", async (req, res) => {
     if (!nome || !usuario || !cargo) {
         return res.status(400).json({
             mensagem: "Preencha todos os campos."
+        });
+    }
+
+    const usuarioExiste = await pool.query(
+        "SELECT id FROM usuarios WHERE usuario = $1 AND id <> $2",
+        [usuario, id]
+    );
+
+    if (usuarioExiste.rows.length > 0) {
+        return res.status(400).json({
+            mensagem: "Este nome de usuário já está em uso."
         });
     }
 
@@ -147,7 +180,12 @@ app.put("/usuarios/:id/status", async (req, res) => {
     const novoStatus = !usuarioAtual.rows[0].ativo;
 
     const resultado = await pool.query(
-        "UPDATE usuarios SET ativo = $1 WHERE id = $2 RETURNING id, nome, usuario, cargo, ativo",
+        `
+        UPDATE usuarios
+        SET ativo = $1
+        WHERE id = $2
+        RETURNING id, nome, usuario, cargo, ativo
+        `,
         [novoStatus, id]
     );
 
@@ -156,6 +194,27 @@ app.put("/usuarios/:id/status", async (req, res) => {
         usuario: resultado.rows[0]
     });
 });
+
+app.delete("/usuarios/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    const resultado = await pool.query(
+        "DELETE FROM usuarios WHERE id = $1 RETURNING id, nome",
+        [id]
+    );
+
+    if (resultado.rows.length === 0) {
+        return res.status(404).json({
+            mensagem: "Usuário não encontrado."
+        });
+    }
+
+    res.json({
+        mensagem: "Usuário removido com sucesso."
+    });
+});
+
+/* PRODUTOS */
 
 app.get("/produtos", async (req, res) => {
     const resultado = await pool.query("SELECT * FROM produtos ORDER BY id ASC");
@@ -183,58 +242,9 @@ app.post("/produtos", async (req, res) => {
     });
 });
 
-app.post("/usuarios", async (req, res) => {
-    const { nome, usuario, senha, cargo } = req.body;
-
-    if (!nome || !usuario || !senha) {
-        return res.status(400).json({
-            mensagem: "Preencha todos os campos."
-        });
-    }
-
-    const existe = await pool.query(
-        "SELECT id FROM usuarios WHERE usuario = $1",
-        [usuario]
-    );
-
-    if (existe.rows.length > 0) {
-        return res.status(400).json({
-            mensagem: "Usuário já existe."
-        });
-    }
-
-    const senhaHash = await bcrypt.hash(senha, 10);
-
-    const resultado = await pool.query(
-        `INSERT INTO usuarios
-        (nome, usuario, senha, cargo)
-        VALUES ($1,$2,$3,$4)
-        RETURNING id,nome,usuario,cargo`,
-        [
-            nome,
-            usuario,
-            senhaHash,
-            cargo || "almoxarife"
-        ]
-    );
-
-    res.status(201).json(resultado.rows[0]);
-});
-
 app.put("/produtos/:id", async (req, res) => {
     const id = Number(req.params.id);
     const { nome, quantidade, localizacao } = req.body;
-
-    const existe = await pool.query(
-        "SELECT * FROM produtos WHERE id = $1",
-        [id]
-    );
-
-    if (existe.rows.length === 0) {
-        return res.status(404).json({
-            mensagem: "Produto não encontrado"
-        });
-    }
 
     const resultado = await pool.query(
         `
@@ -245,6 +255,12 @@ app.put("/produtos/:id", async (req, res) => {
         `,
         [nome, quantidade, localizacao, id]
     );
+
+    if (resultado.rows.length === 0) {
+        return res.status(404).json({
+            mensagem: "Produto não encontrado"
+        });
+    }
 
     const produto = resultado.rows[0];
 
@@ -365,13 +381,11 @@ app.delete("/produtos/:id", async (req, res) => {
     });
 });
 
+/* HISTÓRICO */
+
 app.get("/historico", async (req, res) => {
     const resultado = await pool.query(`
-        SELECT
-            id,
-            tipo,
-            descricao,
-            data
+        SELECT id, tipo, descricao, data
         FROM historico
         ORDER BY id DESC
     `);

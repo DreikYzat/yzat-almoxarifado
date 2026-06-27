@@ -112,3 +112,49 @@ async function alterarStatus(id) {
 
     carregarUsuarios();
 }
+
+async function editarUsuario(id) {
+
+    const nome = prompt("Novo nome:");
+    if (nome === null) return;
+
+    const usuario = prompt("Novo usuário:");
+    if (usuario === null) return;
+
+    const cargo = prompt("Cargo (admin, supervisor ou almoxarife):");
+    if (cargo === null) return;
+
+    try {
+
+        const resposta = await fetch(`${API}/usuarios/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nome.trim(),
+                usuario: usuario.trim(),
+                cargo: cargo.trim()
+            })
+        });
+
+        const dados = await resposta.json();
+
+        if (resposta.ok) {
+            alert(dados.mensagem);
+            carregarUsuarios();
+        } else {
+            alert(dados.mensagem || "Erro ao editar usuário.");
+        }
+
+    } catch (erro) {
+        alert("Erro ao conectar com o servidor.");
+    }
+}
+
+    const dados = await resposta.json();
+
+    alert(dados.mensagem);
+
+    carregarUsuarios();
+}
