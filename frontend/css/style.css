@@ -1,0 +1,410 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:#fff;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.topo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.topo h1{
+    font-size:38px;
+    color:#38bdf8;
+}
+
+.topo p{
+    color:#94a3b8;
+    margin-top:8px;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+.card span{
+    color:#94a3b8;
+}
+
+.card strong{
+    display:block;
+    margin-top:10px;
+    font-size:32px;
+    color:#38bdf8;
+}
+
+.formulario{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:25px;
+}
+
+.formulario h2{
+    margin-bottom:15px;
+}
+
+.formulario input{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:8px;
+    background:#334155;
+    color:white;
+}
+
+.formulario button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#0ea5e9;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.formulario button:hover{
+    background:#0284c7;
+}
+
+.busca input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#1e293b;
+    color:white;
+    margin-bottom:20px;
+}
+
+.produtos h2{
+    margin-bottom:15px;
+}
+
+.produto{
+    background:#1e293b;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:15px;
+    border-left:6px solid #38bdf8;
+    box-shadow:0 5px 15px rgba(0,0,0,.25);
+    transition:0.3s;
+}
+
+.produto:hover{
+    transform:translateY(-3px);
+}
+
+.produto h3{
+    color:#38bdf8;
+    margin-bottom:8px;
+}
+
+.produto p{
+    margin:5px 0;
+    color:#cbd5e1;
+}
+
+/* BOTÃO EXCLUIR */
+
+.btn-excluir{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#ef4444;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-excluir:hover{
+    background:#dc2626;
+    transform: scale(1.02);
+}
+
+.btn-excluir:active{
+    transform:scale(.97);
+}
+/* ===========================
+   AÇÕES DOS PRODUTOS
+=========================== */
+
+.acoes{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.btn-editar,
+.btn-entrada,
+.btn-saida,
+.btn-excluir{
+    border:none;
+    border-radius:8px;
+    padding:10px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-editar{
+    background:#3b82f6;
+}
+
+.btn-editar:hover{
+    background:#2563eb;
+}
+
+.btn-entrada{
+    background:#22c55e;
+}
+
+.btn-entrada:hover{
+    background:#16a34a;
+}
+
+.btn-saida{
+    background:#f59e0b;
+}
+
+.btn-saida:hover{
+    background:#d97706;
+}
+
+/* ===========================
+   STATUS DO ESTOQUE
+=========================== */
+
+.status-estoque{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.estoque-normal{
+    border-left:6px solid #22c55e;
+}
+
+.estoque-baixo{
+    border-left:6px solid #f59e0b;
+}
+
+.estoque-critico{
+    border-left:6px solid #ef4444;
+}
+
+/* ===========================
+   HISTÓRICO
+=========================== */
+
+.historico{
+    margin-top:40px;
+}
+
+.historico h2{
+    margin-bottom:15px;
+}
+
+.historico-item{
+    background:#1e293b;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:12px;
+    border-left:5px solid #38bdf8;
+    color:#e2e8f0;
+}
+
+.historico-cadastro{
+    border-left-color:#22c55e;
+}
+
+.historico-entrada{
+    border-left-color:#16a34a;
+}
+
+.historico-saida{
+    border-left-color:#f59e0b;
+}
+
+.historico-edicao{
+    border-left-color:#3b82f6;
+}
+
+.historico-exclusao{
+    border-left-color:#ef4444;
+}
+/* ===========================
+   MODAL DE ESTOQUE
+=========================== */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.85);
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.ativo{
+    display:flex;
+}
+
+.modal-conteudo{
+    width:100%;
+    max-width:420px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    border:1px solid #334155;
+}
+
+.modal-conteudo h2{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.modal-conteudo p{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+.modal-conteudo input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#334155;
+    color:white;
+    margin-bottom:18px;
+    font-size:16px;
+}
+
+.modal-acoes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.btn-cancelar,
+.btn-confirmar{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-cancelar{
+    background:#64748b;
+}
+
+.btn-confirmar{
+    background:#22c55e;
+}
+/* ===========================
+   LOGIN
+=========================== */
+
+.login-container{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:#1e293b;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    border:1px solid #334155;
+    text-align:center;
+}
+
+.login-card h1{
+    font-size:42px;
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.login-card h2{
+    margin-bottom:25px;
+    color:white;
+}
+
+.login-card input{
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    border:none;
+    border-radius:10px;
+    background:#334155;
+    color:white;
+    font-size:16px;
+}
+
+.login-card button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0ea5e9;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+}
+
+#erroLogin{
+    margin-top:12px;
+    color:#ef4444;
+    font-weight:bold;
+}
+
+.btn-sair{
+    margin-top:15px;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#ef4444;
+    color:white;
+    font-weight:bold;
+}

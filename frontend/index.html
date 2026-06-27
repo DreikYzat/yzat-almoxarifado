@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YZAT Almoxarifado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+</head>
+<body>
+
+  <main class="container">
+    <header class="topo">
+      <h1>📦 YZAT Almoxarifado</h1>
+      
+      <p id="usuarioLogado"></p>
+      
+      <button onclick="sair()" class="btn-sair">Sair</button>
+      
+      <p>Sistema de controle de produtos e estoque</p>
+    </header>
+
+    <section class="dashboard">
+      <div class="card">
+        <span>Total de Produtos</span>
+        <strong id="totalProdutos">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Total em Estoque</span>
+        <strong id="totalEstoque">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Localizações</span>
+        <strong id="totalLocais">0</strong>
+      </div>
+    </section>
+    
+    <section class="grafico">
+    <h2>📊 Estoque por Produto</h2>
+
+    <canvas id="graficoEstoque"></canvas>
+</section>
+    
+<section class="relatorios">
+  <button onclick="exportarPDF()" class="btn-pdf">
+    📄 Exportar Relatório PDF
+  </button>
+</section>
+
+    <section class="formulario">
+      <h2>Novo Produto</h2>
+
+      <input id="nome" placeholder="Nome do produto">
+      <input id="quantidade" type="number" placeholder="Quantidade">
+      <input id="localizacao" placeholder="Localização">
+
+      <button onclick="cadastrarProduto()">Cadastrar</button>
+    </section>
+
+    <section class="busca">
+      <input id="pesquisa" placeholder="Pesquisar produto..." oninput="pesquisarProduto()">
+    </section>
+
+    <section class="produtos">
+      <h2>Produtos</h2>
+      <div id="listaProdutos"></div>
+    </section>
+    
+    <section class="historico">
+  <h2>📜 Histórico</h2>
+  <div id="listaHistorico"></div>
+</section>
+
+<div id="modalEstoque" class="modal">
+  <div class="modal-conteudo">
+    <h2 id="modalTitulo">Movimentar Estoque</h2>
+
+    <p id="modalProduto">Produto selecionado</p>
+
+    <input id="modalQuantidade" type="number" placeholder="Quantidade">
+
+    <div class="modal-acoes">
+      <button onclick="fecharModalEstoque()" class="btn-cancelar">
+        Cancelar
+      </button>
+
+      <button onclick="confirmarMovimentacao()" class="btn-confirmar">
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+}
+</script>
+</body>
+</html>
