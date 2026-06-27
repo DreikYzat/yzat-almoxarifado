@@ -1,13 +1,26 @@
 const API = "https://yzat-almoxarifado.onrender.com";
 
+function mostrarMensagem(texto, tipo = "sucesso") {
+    const msg = document.getElementById("msg");
+
+    msg.style.color = tipo === "sucesso" ? "#22c55e" : "#ef4444";
+    msg.innerText = texto;
+
+    setTimeout(() => {
+        msg.innerText = "";
+    }, 3500);
+}
+
 async function criarUsuario() {
     const nome = document.getElementById("nome").value.trim();
     const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value.trim();
     const cargo = document.getElementById("cargo").value;
-    const msg = document.getElementById("msg");
 
-    msg.innerText = "";
+    if (!nome || !usuario || !senha || !cargo) {
+        mostrarMensagem("Preencha todos os campos.", "erro");
+        return;
+    }
 
     try {
         const resposta = await fetch(`${API}/usuarios`, {
@@ -15,19 +28,13 @@ async function criarUsuario() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                nome,
-                usuario,
-                senha,
-                cargo
-            })
+            body: JSON.stringify({ nome, usuario, senha, cargo })
         });
 
         const dados = await resposta.json();
 
         if (resposta.ok) {
-            msg.style.color = "#22c55e";
-            msg.innerText = dados.mensagem || "Usuário cadastrado com sucesso!";
+            mostrarMensagem(dados.mensagem || "Usuário cadastrado com sucesso.");
 
             document.getElementById("nome").value = "";
             document.getElementById("usuario").value = "";
@@ -36,13 +43,11 @@ async function criarUsuario() {
 
             carregarUsuarios();
         } else {
-            msg.style.color = "#ef4444";
-            msg.innerText = dados.mensagem || "Erro ao cadastrar usuário.";
+            mostrarMensagem(dados.mensagem || "Erro ao cadastrar usuário.", "erro");
         }
 
-    } catch (erro) {
-        msg.style.color = "#ef4444";
-        msg.innerText = "Erro ao conectar com o servidor.";
+    } catch {
+        mostrarMensagem("Erro ao conectar com o servidor.", "erro");
     }
 }
 
@@ -61,14 +66,14 @@ async function carregarUsuarios() {
 
         usuarios.forEach(user => {
             lista.innerHTML += `
-                <div style="background:#1e293b;padding:15px;margin-top:10px;border-radius:10px;">
+                <div class="usuario-card">
                     <b>${user.nome}</b><br>
                     Usuário: ${user.usuario}<br>
                     Cargo: ${user.cargo}<br>
                     Status: ${user.ativo ? "🟢 Ativo" : "🔴 Inativo"}
                     <br><br>
 
-                    <button onclick="editarUsuario(${user.id})">
+                    <button onclick="abrirModalEditar(${user.id}, '${user.nome}', '${user.usuario}', '${user.cargo}')">
                         ✏️ Editar
                     </button>
 
@@ -76,37 +81,64 @@ async function carregarUsuarios() {
                         ${user.ativo ? "🔴 Desativar" : "🟢 Ativar"}
                     </button>
 
-                    <button onclick="excluirUsuario(${user.id})">
+                    <button class="btn-excluir" onclick="abrirModalExcluir(${user.id})">
                         🗑 Excluir
                     </button>
                 </div>
             `;
         });
 
-    } catch (erro) {
-        const lista = document.getElementById("listaUsuarios");
-        lista.innerHTML = "<p>Erro ao carregar usuários.</p>";
+    } catch {
+        document.getElementById("listaUsuarios").innerHTML =
+            "<p>Erro ao carregar usuários.</p>";
     }
 }
 
-async function excluirUsuario(id) {
-    if (!confirm("Deseja realmente excluir este usuário?")) {
+function abrirModalEditar(id, nome, usuario, cargo) {
+    document.getElementById("editId").value = id;
+    document.getElementById("editNome").value = nome;
+    document.getElementById("editUsuario").value = usuario;
+    document.getElementById("editCargo").value = cargo;
+
+    document.getElementById("modalEditar").classList.add("ativo");
+}
+
+function fecharModalEditar() {
+    document.getElementById("modalEditar").classList.remove("ativo");
+}
+
+async function salvarEdicaoUsuario() {
+    const id = document.getElementById("editId").value;
+    const nome = document.getElementById("editNome").value.trim();
+    const usuario = document.getElementById("editUsuario").value.trim();
+    const cargo = document.getElementById("editCargo").value;
+
+    if (!nome || !usuario || !cargo) {
+        mostrarMensagem("Preencha todos os campos.", "erro");
         return;
     }
 
     try {
         const resposta = await fetch(`${API}/usuarios/${id}`, {
-            method: "DELETE"
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ nome, usuario, cargo })
         });
 
         const dados = await resposta.json();
 
-        alert(dados.mensagem || "Usuário excluído.");
+        if (resposta.ok) {
+            fecharModalEditar();
+            mostrarMensagem(dados.mensagem || "Usuário atualizado com sucesso.");
+            carregarUsuarios();
+        } else {
+            mostrarMensagem(dados.mensagem || "Erro ao editar usuário.", "erro");
+        }
 
-        carregarUsuarios();
-
-    } catch (erro) {
-        alert("Erro ao conectar com o servidor.");
+    } catch {
+        mostrarMensagem("Erro ao conectar com o servidor.", "erro");
     }
 }
 
@@ -118,49 +150,47 @@ async function alterarStatus(id) {
 
         const dados = await resposta.json();
 
-        alert(dados.mensagem);
+        if (resposta.ok) {
+            mostrarMensagem(dados.mensagem);
+            carregarUsuarios();
+        } else {
+            mostrarMensagem(dados.mensagem || "Erro ao alterar status.", "erro");
+        }
 
-        carregarUsuarios();
-
-    } catch (erro) {
-        alert("Erro ao conectar com o servidor.");
+    } catch {
+        mostrarMensagem("Erro ao conectar com o servidor.", "erro");
     }
 }
 
-async function editarUsuario(id) {
-    const nome = prompt("Novo nome:");
-    if (nome === null) return;
+function abrirModalExcluir(id) {
+    document.getElementById("excluirId").value = id;
+    document.getElementById("modalExcluir").classList.add("ativo");
+}
 
-    const usuario = prompt("Novo usuário:");
-    if (usuario === null) return;
+function fecharModalExcluir() {
+    document.getElementById("modalExcluir").classList.remove("ativo");
+}
 
-    const cargo = prompt("Cargo (admin, supervisor ou almoxarife):");
-    if (cargo === null) return;
+async function confirmarExcluirUsuario() {
+    const id = document.getElementById("excluirId").value;
 
     try {
         const resposta = await fetch(`${API}/usuarios/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nome: nome.trim(),
-                usuario: usuario.trim(),
-                cargo: cargo.trim()
-            })
+            method: "DELETE"
         });
 
         const dados = await resposta.json();
 
         if (resposta.ok) {
-            alert(dados.mensagem || "Usuário atualizado com sucesso.");
+            fecharModalExcluir();
+            mostrarMensagem(dados.mensagem || "Usuário excluído com sucesso.");
             carregarUsuarios();
         } else {
-            alert(dados.mensagem || "Erro ao editar usuário.");
+            mostrarMensagem(dados.mensagem || "Erro ao excluir usuário.", "erro");
         }
 
-    } catch (erro) {
-        alert("Erro ao conectar com o servidor.");
+    } catch {
+        mostrarMensagem("Erro ao conectar com o servidor.", "erro");
     }
 }
 
