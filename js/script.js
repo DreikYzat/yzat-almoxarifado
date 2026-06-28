@@ -478,5 +478,12 @@ function mostrarUsuarioLogado() {
     }
 }
 
+const cargo = localStorage.getItem("yzatCargo");
+const btnUsuarios = document.getElementById("btnUsuarios");
+
+if (btnUsuarios && cargo !== "admin") {
+    btnUsuarios.style.display = "none";
+}
+
 mostrarUsuarioLogado();
 atualizarTudo();
