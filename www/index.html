@@ -1,0 +1,170 @@
+<!<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>YZAT Almoxarifado</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0ea5e9">
+</head>
+
+<body>
+
+  <main class="container">
+    
+    <button class="menu-btn" onclick="abrirMenu()">☰</button>
+
+<nav id="menuLateral" class="menu-lateral">
+    <button class="fechar-menu" onclick="fecharMenu()">×</button>
+
+    <h2>📦 YZAT</h2>
+
+    <a href="index.html">🏠 Dashboard</a>
+    <a href="#produtos">📦 Produtos</a>
+    <a id="menuUsuarios" href="usuarios.html">👥 Usuários</a>
+    <a href="#historico">📜 Histórico</a>
+
+    <button onclick="sair()">🚪 Sair</button>
+</nav>
+
+    <header class="topo">
+      <h1>📦 YZAT Almoxarifado</h1>
+
+      <p id="usuarioLogado"></p>
+
+      <p>Sistema de controle de produtos e estoque</p>
+    </header>
+
+    <section class="dashboard">
+      <div class="card">
+        <span>Total de Produtos</span>
+        <strong id="totalProdutos">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Total em Estoque</span>
+        <strong id="totalEstoque">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Localizações</span>
+        <strong id="totalLocais">0</strong>
+      </div>
+    </section>
+
+    <section class="grafico">
+      <h2>📊 Estoque por Produto</h2>
+      <canvas id="graficoEstoque"></canvas>
+    </section>
+
+    <section class="relatorios">
+      <button class="btn-pdf" onclick="exportarPDF()">
+        <span>📄</span>
+        <span>Exportar PDF</span>
+      </button>
+    </section>
+
+    <section class="formulario">
+      <h2>Novo Produto</h2>
+
+      <input id="nome" placeholder="Nome do produto">
+      <input id="quantidade" type="number" placeholder="Quantidade">
+      <input id="localizacao" placeholder="Localização">
+
+      <button class="btn-cadastrar" onclick="cadastrarProduto()">
+        Cadastrar Produto
+      </button>
+    </section>
+
+    <section class="busca">
+      <input id="pesquisa" placeholder="Pesquisar produto..." oninput="pesquisarProduto()">
+    </section>
+
+    <section id="produtos" class="produtos">
+      <h2>Produtos</h2>
+      <div id="listaProdutos"></div>
+    </section>
+
+    <section id="historico" class="historico">
+      <h2>📜 Histórico</h2>
+      <div id="listaHistorico"></div>
+    </section>
+
+    <!-- Modal Entrada/Saída -->
+    <div id="modalEstoque" class="modal">
+      <div class="modal-conteudo">
+        <h2 id="modalTitulo">Movimentar Estoque</h2>
+
+        <h3 id="modalProduto"></h3>
+
+        <input id="modalQuantidade" type="number" placeholder="Quantidade">
+
+        <div class="modal-acoes">
+          <button onclick="fecharModalEstoque()" class="btn-cancelar">
+            Cancelar
+          </button>
+
+          <button onclick="confirmarMovimentacao()" class="btn-confirmar">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Editar -->
+    <div id="modalEditar" class="modal">
+      <div class="modal-conteudo">
+        <h2>✏️ Editar Produto</h2>
+
+        <input id="editarNome" placeholder="Nome do produto">
+        <input id="editarQuantidade" type="number" placeholder="Quantidade">
+        <input id="editarLocalizacao" placeholder="Localização">
+
+        <div class="modal-acoes">
+          <button onclick="fecharModalEditar()" class="btn-cancelar">
+            Cancelar
+          </button>
+
+          <button onclick="salvarEdicao()" class="btn-confirmar">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Excluir -->
+    <div id="modalExcluir" class="modal">
+      <div class="modal-conteudo">
+        <h2>🗑️ Excluir Produto</h2>
+
+        <p id="textoExcluir"></p>
+
+        <div class="modal-acoes">
+          <button onclick="fecharModalExcluir()" class="btn-cancelar">
+            Cancelar
+          </button>
+
+          <button onclick="confirmarExclusao()" class="btn-excluir">
+            Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+
+</body>
+</html>

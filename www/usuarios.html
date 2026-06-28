@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YZAT - Usuários</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.card{
+    max-width:700px;
+    margin:30px auto;
+    background:#1f2937;
+    padding:20px;
+    border-radius:15px;
+}
+
+.card h2{
+    text-align:center;
+    color:#2ea8ff;
+    margin-bottom:20px;
+}
+
+.card input,
+.card select{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:10px;
+    background:#2b3748;
+    color:white;
+    font-size:16px;
+}
+
+.modal-box input,
+.modal-box select{
+    width:100%;
+    display:block;
+    padding:14px;
+    margin-bottom:14px;
+    border:none;
+    border-radius:10px;
+    background:#2b3748;
+    color:white;
+    font-size:16px;
+}
+
+.modal-box label{
+    display:block;
+    margin-bottom:6px;
+    color:#cbd5e1;
+    font-weight:bold;
+}
+
+.card button,
+.usuario-card button,
+.modal-box button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#1fa2ff;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.usuario-card{
+    background:#1e293b;
+    padding:15px;
+    margin-top:12px;
+    border-radius:12px;
+}
+
+.msg{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:9999;
+}
+
+.modal.ativo{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#1f2937;
+    padding:22px;
+    border-radius:16px;
+}
+
+.btn-cancelar{
+    background:#64748b !important;
+}
+
+.btn-excluir{
+    background:#ef4444 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>👥 Cadastro de Usuários</h2>
+
+    <input id="nome" placeholder="Nome">
+    <input id="usuario" placeholder="Usuário">
+    <input id="senha" type="password" placeholder="Senha">
+
+    <select id="cargo">
+        <option value="almoxarife">Almoxarife</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="admin">Administrador</option>
+    </select>
+
+    <button onclick="criarUsuario()">Cadastrar Usuário</button>
+
+    <p id="msg" class="msg"></p>
+
+    <hr style="margin:25px 0; border:1px solid #334155;">
+
+    <h2>📋 Usuários Cadastrados</h2>
+
+    <div id="listaUsuarios"></div>
+</div>
+
+<div id="modalEditar" class="modal">
+    <div class="modal-box">
+        <h2>✏️ Editar Usuário</h2>
+        <input id="editId" type="hidden">
+        <label>Nome</label>
+<input type="text" id="editNome">
+
+<label>Usuário</label>
+<input type="text" id="editUsuario">
+
+<label>Cargo</label>
+<select id="editCargo">
+    <option value="admin">Administrador</option>
+    <option value="supervisor">Supervisor</option>
+    <option value="almoxarife">Almoxarife</option>
+</select>
+
+        <button onclick="salvarEdicaoUsuario()">Salvar Alterações</button>
+        <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+    </div>
+</div>
+
+<div id="modalExcluir" class="modal">
+    <div class="modal-box">
+        <h2>🗑 Excluir Usuário</h2>
+        <p>Deseja realmente excluir este usuário?</p>
+
+        <input id="excluirId" type="hidden">
+
+        <button class="btn-excluir" onclick="confirmarExcluirUsuario()">Excluir</button>
+        <button class="btn-cancelar" onclick="fecharModalExcluir()">Cancelar</button>
+    </div>
+</div>
+
+<script src="js/usuarios.js"></script>
+
+</body>
+</html>

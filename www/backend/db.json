@@ -1,0 +1,66 @@
+{
+  "produtos": [
+    {
+      "id": 1782511526307,
+      "nome": "Calhas",
+      "quantidade": 12,
+      "localizacao": "C 1"
+    },
+    {
+      "id": 1782511690473,
+      "nome": "Arame",
+      "quantidade": 10,
+      "localizacao": "A 4"
+    },
+    {
+      "id": 1782511715846,
+      "nome": "Balde",
+      "quantidade": 30,
+      "localizacao": "B 1"
+    },
+    {
+      "id": 1782520020912,
+      "nome": "Alicates",
+      "quantidade": 50,
+      "localizacao": "A 1"
+    }
+  ],
+  "historico": [
+    {
+      "id": 1782520020912,
+      "tipo": "cadastro",
+      "descricao": "Produto cadastrado: Alicates | Quantidade: 50 | Localização: A 1",
+      "data": "26/06/2026, 21:27:00"
+    },
+    {
+      "id": 1782514994836,
+      "tipo": "entrada",
+      "descricao": "Entrada de 5 unidade(s) em Calhas. Estoque atual: 12",
+      "data": "26/06/2026, 20:03:14"
+    },
+    {
+      "id": 1782511715846,
+      "tipo": "cadastro",
+      "descricao": "Produto cadastrado: Balde | Quantidade: 30 | Localização: B 1",
+      "data": "26/06/2026, 19:08:35"
+    },
+    {
+      "id": 1782511690474,
+      "tipo": "cadastro",
+      "descricao": "Produto cadastrado: Arame | Quantidade: 10 | Localização: A 4",
+      "data": "26/06/2026, 19:08:10"
+    },
+    {
+      "id": 1782511542116,
+      "tipo": "saida",
+      "descricao": "Saída de 5 unidade(s) em Calhas. Estoque atual: 7",
+      "data": "26/06/2026, 19:05:42"
+    },
+    {
+      "id": 1782511526308,
+      "tipo": "cadastro",
+      "descricao": "Produto cadastrado: Calhas | Quantidade: 12 | Localização: C 1",
+      "data": "26/06/2026, 19:05:26"
+    }
+  ]
+}

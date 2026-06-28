@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">YZAT Almoxarifado</string>
+    <string name="title_activity_main">YZAT Almoxarifado</string>
+    <string name="package_name">com.yzat.almoxarifado</string>
+    <string name="custom_url_scheme">com.yzat.almoxarifado</string>
+</resources>
