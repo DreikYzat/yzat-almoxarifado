@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,8 +19,20 @@ jobs:
         with:
           node-version: 20
 
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
       - name: Instalar dependências
         run: npm install
+
+      - name: Recriar projeto Android
+        run: |
+          rm -rf android
+          npx cap add android
+          npx cap sync android
 
       - name: Gerar APK
         run: |
