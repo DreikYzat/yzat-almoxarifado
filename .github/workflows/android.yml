@@ -17,7 +17,7 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Instalar Java
         uses: actions/setup-java@v4
@@ -31,8 +31,9 @@ jobs:
       - name: Recriar projeto Android
         run: |
           rm -rf android
-          ./node_modules/.bin/cap add android
-          ./node_modules/.bin/cap sync android
+          chmod +x ./node_modules/@capacitor/cli/bin/capacitor
+          node ./node_modules/@capacitor/cli/bin/capacitor add android
+          node ./node_modules/@capacitor/cli/bin/capacitor sync android
 
       - name: Gerar APK
         run: |
