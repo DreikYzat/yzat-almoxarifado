@@ -31,8 +31,8 @@ jobs:
       - name: Recriar projeto Android
         run: |
           rm -rf android
-          npx cap add android
-          npx cap sync android
+          ./node_modules/.bin/cap add android
+          ./node_modules/.bin/cap sync android
 
       - name: Gerar APK
         run: |
