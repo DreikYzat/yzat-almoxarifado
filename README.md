@@ -2,7 +2,15 @@
 
 Sistema de gerenciamento de almoxarifado desenvolvido por **Andreik Medeiros (DreikYzat)**.
 
-O projeto conta com uma aplicação **Web (PWA)**, **API REST em Node.js**, **Banco de Dados PostgreSQL (Neon)** e uma versão **Android (APK)** construída com **Capacitor**.
+O projeto conta com uma aplicação **Web (PWA)**, uma **API REST em Node.js**, **Banco de Dados PostgreSQL (Neon)** e uma versão **Android (APK)** construída com **Capacitor**.
+
+---
+
+# 🎥 Demonstração em Vídeo
+
+📺 **Assista ao sistema funcionando:**
+
+▶️ https://youtube.com/shorts/zsmvsDPSggQ?is=qskHA7y7iSiWxhMK
 
 ---
 
@@ -10,7 +18,7 @@ O projeto conta com uma aplicação **Web (PWA)**, **API REST em Node.js**, **Ba
 
 - 🔐 Login com autenticação
 - 👥 Gerenciamento de usuários
-- 🛡️ Controle de permissões
+- 🛡️ Controle de níveis de permissão
   - Administrador
   - Supervisor
   - Almoxarife
@@ -22,68 +30,69 @@ O projeto conta com uma aplicação **Web (PWA)**, **API REST em Node.js**, **Ba
 - 📊 Dashboard com indicadores
 - 📈 Gráficos em tempo real
 - 🔎 Pesquisa de produtos
-- 📜 Histórico de movimentações
+- 📜 Histórico completo de movimentações
 - 📄 Exportação de relatórios em PDF
 - 🌐 Aplicação Web (PWA)
 - 📱 Aplicativo Android (APK)
 - ☁️ API hospedada online
+- 🗄️ Banco de Dados PostgreSQL (Neon)
 - 🔄 Integração entre Front-end, API e Banco de Dados
 
 ---
 
 # 🏗️ Arquitetura
 
-
+```text
 Aplicativo Android (Capacitor)
-│
-▼
-API REST (Node.js)
-│
-▼
-PostgreSQL (Neon Database)
-│
-▼
-Dashboard Web (PWA)
-
+            │
+            ▼
+      API REST (Node.js)
+            │
+            ▼
+ PostgreSQL (Neon Database)
+            │
+            ▼
+ Dashboard Web (PWA)
+```
 
 ---
 
-# 🛠️ Tecnologias
+# 🛠️ Tecnologias Utilizadas
 
-## Front-end
+## 🎨 Front-end
 
 - HTML5
 - CSS3
 - JavaScript
 
-## Back-end
+## ⚙️ Back-end
 
 - Node.js
 - Express.js
 
-## Banco de Dados
+## 🗄️ Banco de Dados
 
 - PostgreSQL
 - Neon Database
 
-## Mobile
+## 📱 Mobile
 
 - Capacitor
 - Android
 
-## Bibliotecas
+## 📚 Bibliotecas
 
 - Chart.js
 - jsPDF
 - bcryptjs
 
-## Ferramentas
+## 🧰 Ferramentas
 
 - Git
 - GitHub
 - GitHub Actions
-- Acode
 - Termux
+- Acode
 
 ---
 
@@ -137,39 +146,43 @@ Dashboard Web (PWA)
 
 ---
 
-# 🎥 Vídeo de Demonstração
-
-> Em breve será disponibilizado um vídeo demonstrando todas as funcionalidades do sistema.
-
----
-
 # 🔮 Próximas Atualizações
 
 - 🏢 Sistema Multiempresa
 - 🔐 Autenticação JWT
-- 📷 Leitor de código de barras
 - 🔔 Sistema de notificações
 - 📈 Dashboard avançado
-- 📦 Controle de lotes
+- 📦 Controle inteligente de lotes
 - 📱 Publicação na Google Play
+- 🚀 Melhorias de desempenho e segurança
 
 ---
 
 # 👨‍💻 Desenvolvedor
 
-**Andreik Medeiros (DreikYzat)**
+## Andreik Medeiros (DreikYzat)
 
 Desenvolvedor Full Stack focado em:
 
-- Node.js
-- JavaScript
-- PostgreSQL
-- APIs REST
-- Desenvolvimento Web
-- Aplicações Android
+- ⚡ Node.js
+- 💻 JavaScript
+- 🗄️ PostgreSQL
+- 🌐 APIs REST
+- 📱 Desenvolvimento Web
+- 🤖 Aplicações Android
 
 ---
 
-## ⭐ Apoie o projeto
+## ⭐ Apoie o Projeto
 
-Se este projeto foi útil ou interessante para você, deixe uma **⭐ Star** no repositório para apoiar o desenvolvimento.
+Se este projeto foi útil ou interessante para você, deixe uma **⭐ Star** no repositório.
+
+Todo feedback é bem-vindo e ajuda na evolução do projeto.
+
+---
+
+## 📌 Status do Projeto
+
+🟢 **Em desenvolvimento ativo**
+
+Novas funcionalidades e melhorias são adicionadas continuamente.
