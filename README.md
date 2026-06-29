@@ -1,16 +1,16 @@
 # 📦 YZAT Almoxarifado
 
-Sistema profissional de gerenciamento de almoxarifado desenvolvido por **Andreik Medeiros (DreikYzat)**.
+Sistema de gerenciamento de almoxarifado desenvolvido por **Andreik Medeiros (DreikYzat)**.
 
-O projeto possui versão **Web (PWA)**, **API REST em Node.js**, **Banco de Dados PostgreSQL** e **Aplicativo Android (APK)** utilizando **Capacitor**.
+O projeto conta com uma aplicação **Web (PWA)**, **API REST em Node.js**, **Banco de Dados PostgreSQL (Neon)** e uma versão **Android (APK)** construída com **Capacitor**.
 
 ---
 
-# ✨ Funcionalidades
+# 🚀 Funcionalidades
 
 - 🔐 Login com autenticação
 - 👥 Gerenciamento de usuários
-- 🛡️ Controle de níveis de permissão
+- 🛡️ Controle de permissões
   - Administrador
   - Supervisor
   - Almoxarife
@@ -19,9 +19,10 @@ O projeto possui versão **Web (PWA)**, **API REST em Node.js**, **Banco de Dado
 - 🗑️ Exclusão de produtos
 - ➕ Entrada de estoque
 - ➖ Saída de estoque
+- 📊 Dashboard com indicadores
+- 📈 Gráficos em tempo real
+- 🔎 Pesquisa de produtos
 - 📜 Histórico de movimentações
-- 🔎 Pesquisa em tempo real
-- 📊 Dashboard com gráficos
 - 📄 Exportação de relatórios em PDF
 - 🌐 Aplicação Web (PWA)
 - 📱 Aplicativo Android (APK)
@@ -30,7 +31,24 @@ O projeto possui versão **Web (PWA)**, **API REST em Node.js**, **Banco de Dado
 
 ---
 
-# 🛠️ Tecnologias Utilizadas
+# 🏗️ Arquitetura
+
+
+Aplicativo Android (Capacitor)
+│
+▼
+API REST (Node.js)
+│
+▼
+PostgreSQL (Neon Database)
+│
+▼
+Dashboard Web (PWA)
+
+
+---
+
+# 🛠️ Tecnologias
 
 ## Front-end
 
@@ -56,34 +74,84 @@ O projeto possui versão **Web (PWA)**, **API REST em Node.js**, **Banco de Dado
 ## Bibliotecas
 
 - Chart.js
-- bcryptjs
 - jsPDF
+- bcryptjs
 
 ## Ferramentas
 
 - Git
 - GitHub
 - GitHub Actions
-- Termux
 - Acode
-
----
-
-# 🚀 Próximas Atualizações
-
-- 🏢 Sistema Multiempresa
-- 🔐 Autenticação JWT
-- 📱 Publicação na Google Play
-- 🔔 Sistema de notificações
-- 📷 Leitor de código de barras
-- 📈 Dashboard avançado
-- 📦 Controle de lotes
+- Termux
 
 ---
 
 # 📷 Demonstração
 
-Em breve serão adicionadas imagens do sistema Web e do aplicativo Android.
+## 🔐 Tela de Login
+
+![Login](login.jpg)
+
+---
+
+## 📊 Dashboard
+
+![Dashboard](dashboard.jpg)
+
+---
+
+## 📦 Cadastro de Produtos
+
+![Cadastro Produto](cadastro-produto.jpg)
+
+---
+
+## 📋 Lista de Produtos
+
+![Produtos](produtos.jpg)
+
+---
+
+## 👥 Gerenciamento de Usuários
+
+![Usuários](usuarios.jpg)
+
+---
+
+## 📜 Histórico de Movimentações
+
+![Histórico](historico.jpg)
+
+---
+
+## 📄 Exportação de Relatórios PDF
+
+![PDF](baixar-pdf.jpg)
+
+---
+
+## 🗑️ Confirmação de Exclusão
+
+![Excluir](confirmacao-exclusao.jpg)
+
+---
+
+# 🎥 Vídeo de Demonstração
+
+> Em breve será disponibilizado um vídeo demonstrando todas as funcionalidades do sistema.
+
+---
+
+# 🔮 Próximas Atualizações
+
+- 🏢 Sistema Multiempresa
+- 🔐 Autenticação JWT
+- 📷 Leitor de código de barras
+- 🔔 Sistema de notificações
+- 📈 Dashboard avançado
+- 📦 Controle de lotes
+- 📱 Publicação na Google Play
 
 ---
 
@@ -91,8 +159,17 @@ Em breve serão adicionadas imagens do sistema Web e do aplicativo Android.
 
 **Andreik Medeiros (DreikYzat)**
 
-Desenvolvedor Full Stack em formação.
+Desenvolvedor Full Stack focado em:
+
+- Node.js
+- JavaScript
+- PostgreSQL
+- APIs REST
+- Desenvolvimento Web
+- Aplicações Android
 
 ---
 
-⭐ Caso tenha gostado do projeto, deixe uma estrela no repositório.
+## ⭐ Apoie o projeto
+
+Se este projeto foi útil ou interessante para você, deixe uma **⭐ Star** no repositório para apoiar o desenvolvimento.
